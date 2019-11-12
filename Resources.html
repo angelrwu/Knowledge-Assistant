@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html>
+    
+    <head>
+        <script src="scripts.js"></script>
+        <script type="text/javascript" src="test.js"></script>
+        <!--<base href = "http://localhost/html/"/>-->
+        <link rel = "stylesheet" href = "stylesheet.css" />
+        <title>Resources|Knowledge Assistant</title>
+        
+    </head>
+    <body onload="insertFolders()">
+        <nav>
+            <img src="#" alt= "Knowledge Assistant Logo">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href = "Editor.html">Editor</a></li>
+                <li><a href = "Resources.html">Resources</a></li>
+                <li><a href = "Profile.html">Profile</a></li>
+            </ul>
+        </nav>
+
+        <article>
+            <section>
+                <h1>WIP - Resources</h1>
+                <p>
+                    In this section you will be able to search and find content, by course, book(ISBN) or text.
+                </p>
+                <form style = "margin:0px 2% 0px 2%;display: inline; text-align: center; ">
+                    <input name = "search" type="text" style="width:75%;height: 24px" >
+                    <button name = "search" style="width:18%;height: 30px">Search</button>
+                </form>
+            </section>
+                <button onclick = "javascript:insertFolders()">insertFlashcard</button>
+            <section class = "folders">
+                <!--Folder Inserted-->>
+            </section>
+        </article>
+    </body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    
+	<head>
+        <!-- <base href = "http://localhost/"/> -->
+        <link type="text/css" rel="stylesheet" href="stylesheet.css">
+        <!-- javascript -->
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="plugin/tinymce/tinymce.min.js"></script>
+        <script type="text/javascript" src="plugin/tinymce/init-tinymce.js"></script>
+        <script type="text/javascript" src="scripts.js"></script>
+		<title>Editor|Knowledge Assistant</title>
+	</head>
+	<body onload="temporary()"><!-- 
+        The core Firebase JS SDK is always required and must be listed first
+        <script src="/__/firebase/7.2.2/firebase-app.js"></script>
+
+        TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries 
+        <script src="/__/firebase/7.2.2/firebase-analytics.js"></script>
+
+        Initialize Firebase 
+        <script src="/__/firebase/init.js"></script>-->
+
+        <nav>
+            <img src="#" alt= "Knowledge Assistant Logo">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href = "Editor.html">Editor</a></li>
+                <li><a href = "Resources.html">Resources</a></li>
+                <li><a href = "Profile.html">Profile</a></li>
+            </ul>
+        </nav>
+        
+        <header>
+        </header>
+
+        <main class = "quiz">
+
+            <section class="flashcard">
+
+                <div class="fc">
+                    <div class="fc-container">
+                        <div class="fc-front">
+                            <h1>Unitialized</h1>
+                        </div>
+                        <div class="fc-back">
+                            <p>Unitialized definition</p>
+                                <button class = "good" onclick = "javascript:tempfeedback(2)">Got It!</button>
+                                <button class = "neutral" onclick = "javascript:tempfeedback(1)">Almost got it.</button>
+                                <button class = "bad" onclick = "javascript:tempfeedback(0)">I'll get it next time</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+        </main>
+
+        <footer>
+        </footer>
+
+	</body>
+</html>
+
