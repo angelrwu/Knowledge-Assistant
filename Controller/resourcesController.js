@@ -1,12 +1,16 @@
-function folderTemplate(jsonFile){//Todo replace the path with an relative path based on the fileName
-    return `
-    <figure onclick = setCurrentFolder(${jsonFile.fileName})>
-        <a href = "../View/Quizing.html"><img src = "../res/folder.svg" height="100px" weight = "100px"></a>
-        <figcaption>${jsonFile.fileName}</figcaption>
-    </figure>
-    `;
-};
-
 function insertFolders(){
-    document.getElementsByClassName("folders")[0].innerHTML = jsonFile.map(folderTemplate).join('');
+    // let tempfileName = getLocalStorage(); 
+    console.log(getLocalStorage());
+    console.log("testing");
+    document.getElementsByClassName("folders")[0].innerHTML = getLocalStorage().map(folderTemplate).join('');
+    // document.getElementsByClassName("folders")[0].innerHTML = jsonFile.map(folderTemplate).join('');
+}
+
+function setCurrentFolder(fileName){
+    console.log(`${fileName} is current`);
+    // var lcstrorage = getLocalStorage();
+    var currentFile =  getLocalStorage().filter(function (i) {return i.fileName == fileName});
+    localStorage.setItem("currentFile",JSON.stringify(currentFile));
+    // set(500);
+    // console.log(localStorage.getItem("currentFile") );
 }

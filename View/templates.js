@@ -68,3 +68,13 @@ function allowDrop(ev) {
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
   }
+
+function folderTemplate(jsonFile){//Todo replace the path with an relative path based on the fileName
+    // console.log(jsonFile.fileName)
+    return `
+    <figure onclick= "setCurrentFolder('${jsonFile.fileName}')">
+        <a href = "../View/Quizing.html"><img src = "../res/folder.svg" height="100px" weight = "100px"></a>
+        <figcaption>${jsonFile.fileName}</figcaption>
+    </figure>
+    `;
+};
