@@ -2,16 +2,11 @@ function makeTemplate(template){
 
     var temp =  tinymce.activeEditor.getContent({format:"html"});
     lines = temp.split("\n");
-    let newVocab = new Object();
-    newVocab.vocabularySet = new Array();;
-    for(i = 0; i < lines.length; i++){
-        let newobj = new Object();
-        newobj.keyword = getStrong(lines[i]);
-        newobj.definition = getParagraph(lines[i]);
-        newVocab.vocabularySet.push( newobj);
-        console.log(newVocab.vocabularySet[0]);
-    }
-    fillTemplate(newVocab.vocabularySet, template)
+    let json = setJSON(template,lines);
+    
+    fillTemplate(json.vocab, template);
+    setLocalStorage(json);
+    getLocalStorage();
 }
 
 function getStrong(originalText){
@@ -37,3 +32,35 @@ function fillTemplateWithVocab(vocab,template){
     // document.getElementsByClassName("flashcard")[0].innerHTML += flashcardHTML;
     document.getElementsByClassName("flashcard")[0].innerHTML = (template(vocab));
 };
+
+function setJSON(template, splitText){
+    if (template == flashcardTemplate){
+        template = "flashcard";
+    }else if(template == fillTheBlankTemplate){
+        template = "fillTheBlank";
+    }else if(template == dragTheWordTemplate){
+        template = "dragTheWord";
+    }
+    
+    let newJSON = new Object();
+    newJSON.template = template;
+    newJSON.vocab = new Array();
+
+    for( let j = 0; j < splitText.length; j++){
+        let newvocab = new Object();
+        newvocab.keyword = getStrong(splitText[j]);;
+        newvocab.definition = getParagraph(splitText[j]);
+        newvocab.knows = 0;
+        newJSON.vocab.push(newvocab);
+    }
+    return newJSON;
+}
+
+function setLocalStorage(json){
+    localStorage.clear;
+    localStorage.setItem("json", JSON.stringify(json));
+}
+
+function getLocalStorage(){
+    console.log(JSON.parse(localStorage.getItem("json")));
+}

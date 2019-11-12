@@ -1,40 +1,44 @@
-const vocabularySet2 = {
-    template: "flashcard",
-    vocab:
-    [
-        {
-            keyword:"A",
-            definition:"is for Alpha",
-            knows:0
-        },
-        {
-            keyword:"B",
-            definition:"is for Beta",
-            knows:1
-        },
-        {
-            keyword:"C",
-            definition:"is for Charley",
-            knows:0
-        },
-        {
-            keyword:"D",
-            definition:"is for Delta",
-            knows:0
-        }
-    ]
-};
+// const vocabularySet2 = {
+//     template: "flashcard",
+//     vocab:
+//     [
+//         {
+//             keyword:"A",
+//             definition:"is for Alpha",
+//             knows:0
+//         },
+//         {
+//             keyword:"B",
+//             definition:"is for Beta",
+//             knows:1
+//         },
+//         {
+//             keyword:"C",
+//             definition:"is for Charley",
+//             knows:0
+//         },
+//         {
+//             keyword:"D",
+//             definition:"is for Delta",
+//             knows:0
+//         }
+//     ]
+// };
 
 // function fillTemplate2(vocab,template){
 //     // document.getElementsByClassName("flashcard")[0].innerHTML += flashcardHTML;
 //     document.getElementsByClassName("flashcard")[0].innerHTML = (template(vocab));
 // };
+// JSON.parse(localStorage.getItem("json")).vocab.;
+var unknown = JSON.parse(localStorage.getItem("json")).vocab.filter(function (i) {return i.knows == 0})
+var maybe = JSON.parse(localStorage.getItem("json")).vocab.filter(function (i) {return i.knows == 1})
+var wrong = JSON.parse(localStorage.getItem("json")).vocab.filter(function (i) {return i.knows == 2})
+var right = JSON.parse(localStorage.getItem("json")).vocab.filter(function (i) {return i.knows == 3})
 
-
-var unknown = vocabularySet2.vocab.filter(function (i) {return i.knows == 0})
-var maybe = vocabularySet2.vocab.filter(function (i) {return i.knows == 1})
-var wrong = vocabularySet2.vocab.filter(function (i) {return i.knows == 2})
-var right = vocabularySet2.vocab.filter(function (i) {return i.knows == 3})
+// var unknown = vocabularySet2.vocab.filter(function (i) {return i.knows == 0})
+// var maybe = vocabularySet2.vocab.filter(function (i) {return i.knows == 1})
+// var wrong = vocabularySet2.vocab.filter(function (i) {return i.knows == 2})
+// var right = vocabularySet2.vocab.filter(function (i) {return i.knows == 3})
 
 var position = 0;
 

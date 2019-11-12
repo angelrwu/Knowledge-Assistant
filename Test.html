@@ -12,10 +12,12 @@
         <script type="text/javascript" src="./Model/jsonFolders.js"></script>
         <script type="text/javascript" src="./Model/VocabularySets.js"></script>
         <script type="text/javascript" src="./test.js"></script>
+        <script type="text/javascript" src="./View/templates.js"></script>
+        <script type="text/javascript" src = "./Controller/editorController.js"></script>>
         <!-- <script type="text/javascript" src="./Controller/editorController.js"></script> -->
 		<title>Editor|Knowledge Assistant</title>
 	</head>
-	<body onload= temporary()><!-- 
+	<body><!-- 
         The core Firebase JS SDK is always required and must be listed first
         <script src="/__/firebase/7.2.2/firebase-app.js"></script>
 
@@ -29,10 +31,10 @@
         <nav>
             <img src="#" alt= "Knowledge Assistant Logo">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href = "Editor.html">Editor</a></li>
-                <li><a href = "Resources.html">Resources</a></li>
-                <li><a href = "Profile.html">Profile</a></li>
+                <li><a href="./View/index.html">Home</a></li>
+                <li><a href = "./View/Editor.html">Editor</a></li>
+                <li><a href = "./View/Resources.html">Resources</a></li>
+                <li><a href = "./View/Profile.html">Profile</a></li>
             </ul>
         </nav>
         
@@ -44,7 +46,9 @@
             <article>
                 <h1>This is a test link for random code and function testing</h1>
                 <button onclick="server()">Server</button>
-                <button onclick=""></button>
+                <button onclick="setLocalStorage()">setLocalStorage</button>
+                <button onclick="getLocalStorage()">getLocalStorage</button>
+                <button onclick="testSetJSON()">testsetjson</button>
                 
             </article>
 
