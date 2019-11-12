@@ -5,11 +5,11 @@
         <!-- <base href = "http://localhost/"/> -->
         <link type="text/css" rel="stylesheet" href="stylesheet.css">
         <!-- javascript -->
-		<script type="text/javascript" src="js/jquery.min.js"></script>
-		<script type="text/javascript" src="plugin/tinymce/tinymce.min.js"></script>
-        <script type="text/javascript" src="plugin/tinymce/init-tinymce.js"></script>
-        <script type="text/javascript" src="scripts.js"></script>
-        <script type="text/javascript" src="test.js"></script>
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../plugin/tinymce/tinymce.min.js"></script>
+        <script type="text/javascript" src="../plugin/tinymce/init-tinymce.js"></script>
+        <script type="text/javascript" src="../Controller/editorController.js"></script>
+        <script type="text/javascript" src="../Model/VocabularySets.js"></script>
 		<title>Editor|Knowledge Assistant</title>
 	</head>
 	<body>
@@ -33,12 +33,9 @@
                 <form id="editor" method="POST">
                     <textarea class="tinymce" id = "textEditor"></textarea>
                 </form>
-                <button onclick="javascript:flashcard()">Flashcard</button>
-                <button onclick="javascript:getSelectionText()">Get selection</button>
-                <button onclick = "javascript:matchTheWord()">Match the word</button>
-                <button onclick = "javascript:fillInTheBlank()">Fill in the blank</button>
-                <button onclick = "javascript:serverCall()">server call node</button>
-                <button onclick = "javascript:insertFlashcard()">insertFlashcard</button>
+                <button onclick="javascript:makeTemplate(flashcardTemplate)">Flashcard</button>
+                <button onclick = "javascript:makeTemplate(matchTheWordBlankTemplate)">Match the word</button>
+                <button onclick = "javascript:makeTemplate(fillInTheBlankTemplate)">Fill in the blank</button>
             </section>
 
             <section class="flashcard">

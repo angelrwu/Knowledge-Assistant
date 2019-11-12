@@ -1,4 +1,4 @@
-const vocabularySet2 = [
+const vocabularySet = [
     {
         keyword:"A",
         definition:"is for Alpha"

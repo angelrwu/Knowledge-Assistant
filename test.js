@@ -106,7 +106,7 @@ return `
 function folderTemplate(jsonFile){
     return `
     <figure onclick = setCurrentFolder(${jsonFile.fileName})>
-        <a href = "http://localhost:52330/Quizing.html"><img src = "./res/folder.svg" height="100px" weight = "100px"></a>
+        <a href = "http://localhost:52330/Quizing.html"><img src = "../res/folder.svg" height="100px" weight = "100px"></a>
         <figcaption>${jsonFile.fileName}</figcaption>
     </figure>
     `;

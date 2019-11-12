@@ -1,3 +1,4 @@
+<script type = ""></script>
 let currentFolder = "Default";
 
 const vocabularySet2 = [
