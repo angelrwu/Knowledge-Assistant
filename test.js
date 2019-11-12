@@ -1,126 +1,108 @@
-let currentFolder = "Default";
-
-const vocabularySet2 = [
-    {
-        keyword:"A",
-        definition:"is for Alpha"
-    },
-    {
-        keyword:"B",
-        definition:"is for Beta"
-    },
-    {
-        keyword:"C",
-        definition:"is for Charley"
-    },
-    {
-        keyword:"D",
-        definition:"is for Delta"
-    }
-];
-
-const jsonFile = [
-    {
-        fileName:"alphabetCodenames",
-        vocabularySet:[
-            {
-                keyword:"A",
-                definition:"is for Alpha"
-            },
-            {
-                keyword:"B",
-                definition:"is for Beta"
-            },
-            {
-                keyword:"C",
-                definition:"is for Charley"
-            },
-            {
-                keyword:"D",
-                definition:"is for Delta"
-            }
-        ]
-    },
-    {
-        fileName:"random",
-        vocabularySet:[
-            {
-                keyword:"Pi",
-                definition:"is 3.14"
-            },
-            {
-                keyword:"Tao",
-                definition:"is 6.28"
-            },
-            {
-                keyword:"Astrology",
-                definition:"the believe that the stars can determine one's life properties or story"
-            },
-            {
-                keyword:"Astronomy",
-                definition:"is science that study the stars"
-            }
-        ]
-    },
-    {
-        fileName:"test42",
-        vocabularySet:[
-            {
-                keyword:"Pi",
-                definition:"is 3.14"
-            },
-            {
-                keyword:"Tao",
-                definition:"is 6.28"
-            },
-            {
-                keyword:"Astrology",
-                definition:"the believe that the stars can determine one's life properties or story"
-            },
-            {
-                keyword:"Astronomy",
-                definition:"is science that study the stars"
-            }
-        ]
-    }
-];
-
-function flashcardTemplate(flashcard){
-return `
-<div class="fc">
-<div class="fc-container">
-    <div class="fc-front">
-        <h1>${flashcard.keyword}</h1>
-    </div>
-    <div class="fc-back">
-        <p>${flashcard.definition}</p>
-            <button onclick = "javascript:good()">Good</button>
-            <button onclick = "javascript:good()">Neutral</button>
-            <button onclick = "javascript:bad()">Bad</button>
-    </div>
-</div>
-</div>
-`
-};
-
-function folderTemplate(jsonFile){
-    return `
-    <figure onclick = setCurrentFolder(${jsonFile.fileName})>
-        <a href = "http://localhost:52330/Quizing.html"><img src = "../res/folder.svg" height="100px" weight = "100px"></a>
-        <figcaption>${jsonFile.fileName}</figcaption>
-    </figure>
-    `;
-};
-
-function insertFlashcard(){
-    // document.getElementsByClassName("flashcard")[0].innerHTML += flashcardHTML;
-    document.getElementsByClassName("flashcard")[0].innerHTML = vocabularySet2.map(flashcardTemplate).join('');
-};
-
-function insertFolders(){
-    document.getElementsByClassName("folders")[0].innerHTML = jsonFile.map(folderTemplate).join('');
+function server(){
+    return "";
 }
 
-function setCurrentFolder(fileName){
-    currentFolder = fileName;
+const vocabularySet2 = {
+    template: "flashcard",
+    vocab:
+    [
+        {
+            keyword:"A",
+            definition:"is for Alpha",
+            knows:0
+        },
+        {
+            keyword:"B",
+            definition:"is for Beta",
+            knows:1
+        },
+        {
+            keyword:"C",
+            definition:"is for Charley",
+            knows:0
+        },
+        {
+            keyword:"D",
+            definition:"is for Delta",
+            knows:0
+        }
+    ]
+};
+
+function fillTemplate2(vocab,template){
+    // document.getElementsByClassName("flashcard")[0].innerHTML += flashcardHTML;
+    document.getElementsByClassName("flashcard")[0].innerHTML = (template(vocab));
+};
+
+
+var unknown = vocabularySet2.vocab.filter(function (i) {return i.knows == 0})
+var maybe = vocabularySet2.vocab.filter(function (i) {return i.knows == 1})
+var wrong = vocabularySet2.vocab.filter(function (i) {return i.knows == 2})
+var right = vocabularySet2.vocab.filter(function (i) {return i.knows == 3})
+
+var position = 0;
+
+function temporary(){
+    fillTemplate2(unknown[position],fillTheBlankTemplate);
+}
+
+function quizSelector(list){
+    
+    var keywordEntry = document.getElementsByClassName("fc-front")[0];
+    var definitionEntry = document.getElementsByClassName("fc-back")[0];
+    keywordEntry = keywordEntry.getElementsByTagName("h1");
+    definitionEntry = definitionEntry.getElementsByTagName("p");
+    if(list == 0){
+        fillTemplate2(unknown[position],fillTheBlankTemplate);
+    }else if(list == 1){
+        fillTemplate2(wrong[position],fillTheBlankTemplate);
+    }else if(list == 2){
+        fillTemplate2(maybe[position],fillTheBlankTemplate);
+    }else if(list == 3){
+        fillTemplate2(right[position],fillTheBlankTemplate);
+    }
+}
+
+function quizFeedbackArrayHandler(goodArray,badArray, currentArray,feedback){
+    if(feedback == 2){//good
+        goodArray.push(currentArray.shift());
+    } else if(feedback == 1){//neutral
+        badArray.push(currentArray.shift());
+    } else if(feedback == 0){//bad
+        badArray.push(currentArray.shift());
+    }
+}
+//make a routing such that if current list isn't empty then route to the lowest list, else keep going linear
+function quizFeedbackRouteHandler(unknown,wrong,maybe,right){
+    if(unknown.length != 0){//good
+        quizSelector(0);
+    } else if(wrong.length != 0){//neutral
+        quizSelector(1);
+    } else if(maybe.length != 0){//neutral
+        quizSelector(2);
+    } else if(right.length != 0){//neutral
+        quizSelector(3);
+    } 
+}
+
+function tempfeedback(feedback){
+    
+    if(unknown.length != 0){
+        quizFeedbackArrayHandler(maybe,wrong,unknown,feedback);
+        quizFeedbackRouteHandler(unknown,wrong,maybe,right);
+    } else if(wrong.length != 0){
+        quizFeedbackArrayHandler(maybe,wrong,wrong,feedback);
+        quizFeedbackRouteHandler(unknown,wrong,maybe,right);
+    }else if(maybe.length != 0){
+        quizFeedbackArrayHandler(right,wrong,maybe,feedback);
+        quizFeedbackRouteHandler(unknown,wrong,maybe,right);
+    }else if(right.length != 0){
+        quizFeedbackArrayHandler(right,wrong,right,feedback);
+        quizFeedbackRouteHandler(unknown,wrong,maybe,right);
+    }
+
+    console.log("Unknown " + unknown.length);
+    console.log("wrong   " + wrong.length);
+    console.log("maybe   " + maybe.length);
+    console.log("right   " + right.length);
 }

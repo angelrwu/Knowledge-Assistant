@@ -10,6 +10,7 @@
         <script type="text/javascript" src="../plugin/tinymce/init-tinymce.js"></script>
         <script type="text/javascript" src="../Controller/editorController.js"></script>
         <script type="text/javascript" src="../Model/VocabularySets.js"></script>
+        <script type="text/javascript" src="../View/templates.js"></script>
 		<title>Editor|Knowledge Assistant</title>
 	</head>
 	<body>
@@ -34,8 +35,8 @@
                     <textarea class="tinymce" id = "textEditor"></textarea>
                 </form>
                 <button onclick="javascript:makeTemplate(flashcardTemplate)">Flashcard</button>
-                <button onclick = "javascript:makeTemplate(matchTheWordBlankTemplate)">Match the word</button>
-                <button onclick = "javascript:makeTemplate(fillInTheBlankTemplate)">Fill in the blank</button>
+                <button onclick = "javascript:makeTemplate(dragTheWordTemplate)">Match the word</button>
+                <button onclick = "javascript:makeTemplate(fillTheBlankTemplate)">Fill in the blank</button>
             </section>
 
             <section class="flashcard">

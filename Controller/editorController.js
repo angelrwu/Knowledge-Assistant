@@ -1,18 +1,3 @@
-// function getTinyMCEVocabularySet(){
-
-//     var temp =  tinymce.activeEditor.getContent({format:"html"});
-//     lines = temp.split("\n");
-//     var vocabularySet = new vocabularySet;
-//     for(i = 0; i < lines.length; i++){
-//         keyword = getStrong(lines[i]);
-//         definition = getParagraph(lines[i]);
-//         var vocabulary = new vocabulary;
-//         vocabulary = {keyword,defintion};
-//         vocabularySet.unknown.push(vocabulary);
-//     }
-//     return vocabularySet;
-// }
-
 function makeTemplate(template){
 
     var temp =  tinymce.activeEditor.getContent({format:"html"});
@@ -43,43 +28,12 @@ function getParagraph(originalText){
     return finalText;
 }
 
-function flashcardTemplate(flashcard){
-    return `
-    <div class="fc">
-    <div class="fc-container">
-        <div class="fc-front">
-            <h1>${flashcard.keyword}</h1>
-        </div>
-        <div class="fc-back">
-            <p>${flashcard.definition}</p>
-                <button onclick = "javascript:good()">Good</button>
-                <button onclick = "javascript:good()">Neutral</button>
-                <button onclick = "javascript:bad()">Bad</button>
-        </div>
-    </div>
-    </div>
-    `
-};
-
-function fillInTheBlankTemplate(flashcard){
-    return `
-    <div class="fc">
-    <div class="fc-container">
-        <div class="fc-front">
-            <h1>______${flashcard.definition}</h1>
-        </div>
-        <div class="fc-back">
-            <p>${flashcard.keyword}</p>
-                <button onclick = "javascript:good()">Good</button>
-                <button onclick = "javascript:good()">Neutral</button>
-                <button onclick = "javascript:bad()">Bad</button>
-        </div>
-    </div>
-    </div>
-    `
-};
-
-function fillTemplate(vocab,template){
+function fillTemplate(vocabset,template){
     // document.getElementsByClassName("flashcard")[0].innerHTML += flashcardHTML;
-    document.getElementsByClassName("flashcard")[0].innerHTML = vocab.map(template).join('');
+    document.getElementsByClassName("flashcard")[0].innerHTML = vocabset.map(template).join('');
+};
+
+function fillTemplateWithVocab(vocab,template){
+    // document.getElementsByClassName("flashcard")[0].innerHTML += flashcardHTML;
+    document.getElementsByClassName("flashcard")[0].innerHTML = (template(vocab));
 };

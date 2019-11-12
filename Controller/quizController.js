@@ -1,83 +1,102 @@
-var unknown = [["a","is alpha"],["b","is beta"],["c","is charly"],["d","is delta"]];
-var wrong = [];
-var maybe = [];
-var right = [];
+const vocabularySet2 = {
+    template: "flashcard",
+    vocab:
+    [
+        {
+            keyword:"A",
+            definition:"is for Alpha",
+            knows:0
+        },
+        {
+            keyword:"B",
+            definition:"is for Beta",
+            knows:1
+        },
+        {
+            keyword:"C",
+            definition:"is for Charley",
+            knows:0
+        },
+        {
+            keyword:"D",
+            definition:"is for Delta",
+            knows:0
+        }
+    ]
+};
+
+// function fillTemplate2(vocab,template){
+//     // document.getElementsByClassName("flashcard")[0].innerHTML += flashcardHTML;
+//     document.getElementsByClassName("flashcard")[0].innerHTML = (template(vocab));
+// };
+
+
+var unknown = vocabularySet2.vocab.filter(function (i) {return i.knows == 0})
+var maybe = vocabularySet2.vocab.filter(function (i) {return i.knows == 1})
+var wrong = vocabularySet2.vocab.filter(function (i) {return i.knows == 2})
+var right = vocabularySet2.vocab.filter(function (i) {return i.knows == 3})
+
 var position = 0;
 
 function temporary(){
-    
-    var keywordEntry = document.getElementsByClassName("fc-front")[0];
-    var definitionEntry = document.getElementsByClassName("fc-back")[0];
-    keywordEntry = keywordEntry.getElementsByTagName("h1");
-    definitionEntry = definitionEntry.getElementsByTagName("p");
-    keywordEntry[0].innerHTML = unknown[position][0];
-    definitionEntry[0].innerHTML = unknown[position][1];
+    fillTemplateWithVocab(unknown[position],fillTheBlankTemplate);
 }
 
-function temporaryb(list){
+function quizSelector(list){
     
     var keywordEntry = document.getElementsByClassName("fc-front")[0];
     var definitionEntry = document.getElementsByClassName("fc-back")[0];
     keywordEntry = keywordEntry.getElementsByTagName("h1");
     definitionEntry = definitionEntry.getElementsByTagName("p");
     if(list == 0){
-        keywordEntry[0].innerHTML = unknown[position][0];
-        definitionEntry[0].innerHTML = unknown[position][1];
+        fillTemplateWithVocab(unknown[position],fillTheBlankTemplate);
     }else if(list == 1){
-        keywordEntry[0].innerHTML = wrong[position][0];
-        definitionEntry[0].innerHTML = wrong[position][1];
+        fillTemplateWithVocab(wrong[position],fillTheBlankTemplate);
     }else if(list == 2){
-        keywordEntry[0].innerHTML = maybe[position][0];
-        definitionEntry[0].innerHTML = maybe[position][1];
+        fillTemplateWithVocab(maybe[position],fillTheBlankTemplate);
     }else if(list == 3){
-        keywordEntry[0].innerHTML = right[position][0];
-        definitionEntry[0].innerHTML = right[position][1];
+        fillTemplateWithVocab(right[position],fillTheBlankTemplate);
     }
+}
+
+function quizFeedbackArrayHandler(goodArray,badArray, currentArray,feedback){
+    if(feedback == 2){//good
+        goodArray.push(currentArray.shift());
+    } else if(feedback == 1){//neutral
+        badArray.push(currentArray.shift());
+    } else if(feedback == 0){//bad
+        badArray.push(currentArray.shift());
+    }
+}
+//make a routing such that if current list isn't empty then route to the lowest list, else keep going linear
+function quizFeedbackRouteHandler(unknown,wrong,maybe,right){
+    if(unknown.length != 0){//good
+        quizSelector(0);
+    } else if(wrong.length != 0){//neutral
+        quizSelector(1);
+    } else if(maybe.length != 0){//neutral
+        quizSelector(2);
+    } else if(right.length != 0){//neutral
+        quizSelector(3);
+    } 
 }
 
 function tempfeedback(feedback){
     
     if(unknown.length != 0){
-        if(feedback == 2){//good
-            maybe.push(unknown.shift());
-        } else if(feedback == 1){//neutral
-            wrong.push(unknown.shift());
-
-        } else if(feedback == 0){//bad
-            wrong.push(unknown.shift());
-        }
-        temporaryb(0);
+        quizFeedbackArrayHandler(maybe,wrong,unknown,feedback);
+        quizFeedbackRouteHandler(unknown,wrong,maybe,right);
     } else if(wrong.length != 0){
-        if(feedback == 2){//good
-            maybe.push(wrong.shift());
-        } else if(feedback == 1){//neutral
-            wrong.push(wrong.shift());
-
-        } else if(feedback == 0){//bad
-            wrong.push(wrong.shift());
-        }
-        temporaryb(1);
+        quizFeedbackArrayHandler(maybe,wrong,wrong,feedback);
+        quizFeedbackRouteHandler(unknown,wrong,maybe,right);
     }else if(maybe.length != 0){
-        if(feedback == 2){//good
-            right.push(maybe.shift());
-        } else if(feedback == 1){//neutral
-            wrong.push(maybe.shift());
-
-        } else if(feedback == 0){//bad
-            wrong.push(maybe.shift());
-        }
-        temporaryb(2);
+        quizFeedbackArrayHandler(right,wrong,maybe,feedback);
+        quizFeedbackRouteHandler(unknown,wrong,maybe,right);
     }else if(right.length != 0){
-        if(feedback == 2){//good
-            right.push(right.shift());
-        } else if(feedback == 1){//neutral
-            wrong.push(right.shift());
-
-        } else if(feedback == 0){//bad
-            wrong.push(right.shift());
-        }
-        temporaryb(3);
+        quizFeedbackArrayHandler(right,wrong,right,feedback);
+        quizFeedbackRouteHandler(unknown,wrong,maybe,right);
     }
+
     console.log("Unknown " + unknown.length);
     console.log("wrong   " + wrong.length);
     console.log("maybe   " + maybe.length);
