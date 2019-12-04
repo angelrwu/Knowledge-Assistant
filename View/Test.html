@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    
+	<head>
+        <!-- <base href = "http://localhost/"/> -->
+        <link type="text/css" rel="stylesheet" href="./stylesheet.css">
+        <!-- javascript -->
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../plugin/tinymce/tinymce.min.js"></script>
+        <script type="text/javascript" src="../plugin/tinymce/init-tinymce.js"></script>
+        <script type="text/javascript" src="../Controller/quizController.js"></script>
+        <script type="text/javascript" src="../Model/jsonFolders.js"></script>
+        <script type="text/javascript" src="../Model/VocabularySets.js"></script>
+        <script type="text/javascript" src="../Controller/testController.js"></script>
+        <script type="text/javascript" src="./templates.js"></script>
+        <script type="text/javascript" src = "../Controller/editorController.js"></script>>
+        <!-- <script type="text/javascript" src="./Controller/editorController.js"></script> -->
+		<title>Editor|Knowledge Assistant</title>
+	</head>
+	<body>
+        <nav>
+            <img src="#" alt= "Knowledge Assistant Logo">
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href = "./Editor.html">Editor</a></li>
+                <li><a href = "./Resources.html">Resources</a></li>
+                <li><a href = "./Profile.html">Profile</a></li>
+            </ul>
+        </nav>
+        
+        <header>
+        </header>
+
+        <main class = "quiz">
+
+            <article>
+                <h1>This is a test link for random code and function testing</h1>
+                <button onclick="server()">Server</button>
+                <button onclick="jsonFolders()">jsonFolders</button>
+                
+            </article>
+
+            <section class="flashcard">
+                <!--Insert Template one at a time-->
+                <figure onclick= "setCurrentFolder()">
+                        <a href = "../View/Quizing.html"><img src = "../res/folder.svg" height="100px" weight = "100px"></a>
+                        <figcaption>${jsonFile.fileName}</figcaption>
+                </figure>
+            </section>
+            
+        </main>
+
+        <footer>
+        </footer>
+
+	</body>
+</html>
+

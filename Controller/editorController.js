@@ -15,18 +15,26 @@ function addTemplate(template){//TODO testing multifiles currently manual replac
     //TODO simply this and the other add function at the button
     //TODO use the make function extract the JSON, hold the previous one prior to running, get the second then merge them into a single object then re upload to local storage
 
-    var temp =  tinymce.activeEditor.getContent({format:"html"});
-    lines = temp.split("\n");
-    let json = setJSON(template,lines);
+    // var temp =  tinymce.activeEditor.getContent({format:"html"});
+    // lines = temp.split("\n");
+    // let json = setJSON(template,lines);
 
     let hold = getLocalStorage();
     makeTemplate(template);
     let newhold = getLocalStorage();
-    newhold.foldersArray[0].fileName="tempFileName2";
+    // newhold.foldersArray.fileName="tempFileName2";
 
     //merge them into one
+    // console.log(typeof(hold.foldersArray[0]));
+    // console.log(hold);
+    // console.log(localStorage.getItem("json"));
+    //TODO: make a querry for the field and get the name for the fileName
+    console.log(document.getElementById("fileName"));
+    newhold.foldersArray[0].fileName=document.getElementById("fileName")[0];
     hold.foldersArray.push(newhold.foldersArray[0]);
     setLocalStorage(hold);
+    
+    // console.log(getLocalStorage());
 
 }
 
@@ -110,7 +118,10 @@ function getLocalStorage(){
 // }
 
 function setFoldersArray(fileName,vocabSet){
-    let foldersArray = new Array;
+    let json = new Object;
+    let foldersArray = new Array();
+    json.foldersArray = foldersArray;
+    
         //folder
         let folder = new Object;
         folder.fileName = fileName;
@@ -121,5 +132,5 @@ function setFoldersArray(fileName,vocabSet){
 
 
     // console.log(JSON.stringify(foldersArray));
-    return foldersArray;
+    return json;
 }
