@@ -31,13 +31,16 @@
             <div class="view">
             <section id="editor">
                 <!-- <h1>Word Editor - TinyMCE</h1> -->
-
-                <form style="margin:10px 0px 10px 0px; ">
+                <form style="display:inline-block; margin:10px 0 10px 0; ">
                     <label for="fileName">File Name:</label>
-                    <input id="fileName" type="text" name = "fileName">
-                    <button onclick="javascript:addTemplate(fillTheBlankTemplate)">submit</button>
-                    <!-- <input onclick="javascript:saveFile()" type="submit" name = "submit"> -->
+                    <textarea  style= "vertical-align:bottom;margin: 0; height: 20px;width: 66%;" id="formFileName" type="text" name = "fileName"></textarea>
                 </form>
+                <button style="vertical-align:text-bottom; height: 25px;margin:0"onclick="javascript:saveTemplate()">submit</button>
+                <form id="formTemplate">
+                    <input style="margin: 0 0px 0 7px;" type="radio" name="templateType" value="flashcard">Flashcard
+                    <input style="margin: 0 0px 0 7px;" type="radio" name="templateType" value="dragTheWord"> Drag-The-Word
+                    <input style="margin: 0 0px 0 0px;" type="radio" name="templateType" value="fillTheBlank"> Fill-The-Blank 
+                </form> 
 
                 <form>
                     <textarea class="tinymce" id = "textEditor"></textarea>

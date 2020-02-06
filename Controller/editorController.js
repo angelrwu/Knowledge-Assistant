@@ -1,41 +1,47 @@
-function makeTemplate(template){
+function saveTemplate(){
+    //get all of the data
+    let hold = getLocalStorage();
+    let templateType = document.getElementsByName("templateType");
+    //parsing through the radio buttons to get the selected item
+    for(let i = 0;i< templateType.length;i++){
+        if(templateType[i].checked){
+            templateType = templateType[i].value;
+            break;
+        }
+    }
+    let template = templateTypeToTemplate(templateType);
+    
+    let fileName = document.getElementById("formFileName").value;
+    document.getElementById("formFileName").innerText="";
+    let vocavulary =  tinymce.activeEditor.getContent({format:"html"});
 
-    var temp =  tinymce.activeEditor.getContent({format:"html"});
-    lines = temp.split("\n");
-    let json = setJSON(template,lines);
-
+    //Write the first folder structure
+    lines = vocavulary.split("\n");
+    let json = setJSON(templateType,lines);
     fillTemplate(json.vocab, template);
-    // setLocalStorage(json);
-    let folder = setFoldersArray("tempFileName", json)
+    let folder = setFoldersArray(fileName, json)
     setLocalStorage(folder);
     getLocalStorage();
+
+    //Adds items when storage is filled
+    if(window.localStorage.length > 0){
+        let newhold = getLocalStorage();
+        newhold.foldersArray[0].fileName= fileName;
+        hold.foldersArray.push(newhold.foldersArray[0]);
+        setLocalStorage(hold);
+    }
 }
 
-function addTemplate(template){//TODO testing multifiles currently manual replace tempfilename2 with a var field
-    //TODO simply this and the other add function at the button
-    //TODO use the make function extract the JSON, hold the previous one prior to running, get the second then merge them into a single object then re upload to local storage
-
-    // var temp =  tinymce.activeEditor.getContent({format:"html"});
-    // lines = temp.split("\n");
-    // let json = setJSON(template,lines);
-
-    let hold = getLocalStorage();
-    makeTemplate(template);
-    let newhold = getLocalStorage();
-    // newhold.foldersArray.fileName="tempFileName2";
-
-    //merge them into one
-    // console.log(typeof(hold.foldersArray[0]));
-    // console.log(hold);
-    // console.log(localStorage.getItem("json"));
-    //TODO: make a querry for the field and get the name for the fileName
-    console.log(document.getElementById("fileName"));
-    newhold.foldersArray[0].fileName=document.getElementById("fileName")[0];
-    hold.foldersArray.push(newhold.foldersArray[0]);
-    setLocalStorage(hold);
-    
-    // console.log(getLocalStorage());
-
+function templateTypeToTemplate(templateType){
+    let template = flashcardTemplate;
+    if (templateType == "flashcard"){
+        template = flashcardTemplate;
+    }else if(templateType == "fillTheBlank"){
+        template = fillTheBlankTemplate;
+    }else if(templateType == "dragTheWord"){
+        template = dragTheWordTemplate;
+    }
+    return template;
 }
 
 function getStrong(originalText){
@@ -63,13 +69,6 @@ function fillTemplateWithVocab(vocab,template){
 };
 
 function setJSON(template, splitText){
-    if (template == flashcardTemplate){
-        template = "flashcard";
-    }else if(template == fillTheBlankTemplate){
-        template = "fillTheBlank";
-    }else if(template == dragTheWordTemplate){
-        template = "dragTheWord";
-    }
     
     let newJSON = new Object();
     newJSON.template = template;
@@ -82,6 +81,8 @@ function setJSON(template, splitText){
         newvocab.knows = 0;
         newJSON.vocab.push(newvocab);
     }
+    console.log(JSON.stringify(template));
+    console.log(newJSON.template);
     return newJSON;
 }
 
@@ -91,37 +92,13 @@ function setLocalStorage(json){
 }
 
 function getLocalStorage(){
-    // console.log(JSON.parse(localStorage.getItem("json")));
     return JSON.parse(localStorage.getItem("json"));
 }
-
-// function jsonFolders(){
-//     let foldersArray = new Array;
-//         //folder
-//         let folder = new Object;
-//         folder.fileName = "testFIle";
-//         folder.vocabularySet = new Object;
-//             //vocavulary set
-//             let vocabSet = new Object;
-//             vocabSet.template = "flashcard";
-//             vocabSet.vocab = Array;
-//                 //vocavulary
-//                 let vocab = new Object;
-//                 vocab.keyword = "B";
-//                 vocab.definition = "is for beta";
-//                 vocab.knows = 0;
-//             vocabSet.vocab = vocab;
-//         folder.vocabularySet = vocabSet;
-//     foldersArray.push(folder);
-
-//     console.log(JSON.stringify(foldersArray));
-// }
 
 function setFoldersArray(fileName,vocabSet){
     let json = new Object;
     let foldersArray = new Array();
     json.foldersArray = foldersArray;
-    
         //folder
         let folder = new Object;
         folder.fileName = fileName;
@@ -129,8 +106,5 @@ function setFoldersArray(fileName,vocabSet){
         folder.vocabularySet = new Object;
         folder.vocabularySet = vocabSet;
     foldersArray.push(folder);
-
-
-    // console.log(JSON.stringify(foldersArray));
     return json;
 }

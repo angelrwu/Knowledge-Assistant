@@ -1,7 +1,3 @@
-function server(){
-    return "";
-}
-
 function jsonFolders(){
     let json = new Object;
     let foldersArray = new Array;

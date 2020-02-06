@@ -1,4 +1,7 @@
+
 console.log(JSON.parse(localStorage.getItem("currentFile"))[0].vocabularySet.vocab);
+console.log(JSON.parse(localStorage.getItem("currentFile"))[0].vocabularySet.template);
+let template = templateTypeToTemplate(JSON.parse(localStorage.getItem("currentFile"))[0].vocabularySet.template); 
 var unknown = JSON.parse(localStorage.getItem("currentFile"))[0].vocabularySet.vocab.filter(function (i) {return i.knows == 0})
 var maybe = JSON.parse(localStorage.getItem("currentFile"))[0].vocabularySet.vocab.filter(function (i) {return i.knows == 1})
 var wrong = JSON.parse(localStorage.getItem("currentFile"))[0].vocabularySet.vocab.filter(function (i) {return i.knows == 2})
@@ -6,19 +9,32 @@ var right = JSON.parse(localStorage.getItem("currentFile"))[0].vocabularySet.voc
 
 var position = 0;
 
+//TODO do an import instead of copy 
+function templateTypeToTemplate(templateType){
+    let template = flashcardTemplate;
+    if (templateType == "flashcard"){
+        template = flashcardTemplate;
+    }else if(templateType == "fillTheBlank"){
+        template = fillTheBlankTemplate;
+    }else if(templateType == "dragTheWord"){
+        template = dragTheWordTemplate;
+    }
+    return template;
+}
+
 function temporary(){
-    fillTemplateWithVocab(unknown[position],fillTheBlankTemplate);
+    fillTemplateWithVocab(unknown[position],template);
 }
 
 function quizSelector(list){
     if(list == 0){
-        fillTemplateWithVocab(unknown[position],fillTheBlankTemplate);
+        fillTemplateWithVocab(unknown[position],template);
     }else if(list == 1){
-        fillTemplateWithVocab(wrong[position],fillTheBlankTemplate);
+        fillTemplateWithVocab(wrong[position],template);
     }else if(list == 2){
-        fillTemplateWithVocab(maybe[position],fillTheBlankTemplate);
+        fillTemplateWithVocab(maybe[position],template);
     }else if(list == 3){
-        fillTemplateWithVocab(right[position],fillTheBlankTemplate);
+        fillTemplateWithVocab(right[position],template);
     }
 }
 
